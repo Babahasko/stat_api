@@ -31,8 +31,6 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 			return
 		}
 		fmt.Println(payload)
-		fmt.Println(handler.Config.Auth.Secret)
-		fmt.Println("Login")
 		resp_body := LoginResponse{
 			Token: "123",
 		}
@@ -42,6 +40,11 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 
 func (handler *AuthHandler) Register() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		payload, err := req.HandleBody[RegisterRequest](&w, r)
+		if err != nil {
+			return
+		}
+		fmt.Println(payload)
 		fmt.Println("Register")
 	}
 }
