@@ -14,10 +14,10 @@ func main() {
 		Config: conf,
 	})
 	server := http.Server{
-		Addr: ":8081",
+		Addr:    ":8081",
 		Handler: router,
 	}
-	
-	fmt.Println("Server is listenong on port 8081")
+
+	fmt.Println("Server is listening on port 8081")
 	server.ListenAndServe()
 }
