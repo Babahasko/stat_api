@@ -12,11 +12,16 @@ type Link struct {
 	Hash string `json:"hash" gorm:"uniqueIndex"`
 }
 
-func NewLink(url string) *Link{
-	return &Link{
+func NewLink(url string) *Link {
+	link := &Link{
 		Url: url,
-		Hash: RandomStringRunes(6),
 	}
+	link.GenerateHash()
+	return link
+}
+
+func (link *Link) GenerateHash() {
+	link.Hash = RandomStringRunes(6)
 }
 
 var lettersRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIKLMNOPQRTSTUVWXYZ")
