@@ -2,6 +2,8 @@ package link
 
 import (
 	"fmt"
+	"go/adv-demo/pkg/req"
+	"go/adv-demo/pkg/res"
 	"net/http"
 )
 
@@ -26,16 +28,44 @@ func NewLinkHandler(router *http.ServeMux, deps LinkHandlerDeps) {
 
 func (handler *LinkHandler) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		body, err := req.HandleBody[LinkCreateRequest](&w, r)
+		if err != nil {
+			return
+		}
+		link := NewLink(body.Url)
+		for {
+			checkLink, _ := handler.LinkRepository.GetByHash(link.Hash)
+			if checkLink == nil {
+				break
+			}
+			link.GenerateHash()
+		}
+		
+		createdLink, err := handler.LinkRepository.Create(link)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		res.Json(w, createdLink, 201)
+
 	}
 }
 func (handler *LinkHandler) GoTo() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		hash := r.PathValue("hash")
+		link, err := handler.LinkRepository.GetByHash(hash)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		http.Redirect(w, r, link.Url, http.StatusTemporaryRedirect)
 	}
 }
 func (handler *LinkHandler) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	}
 }
+
 func (handler *LinkHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("id")
