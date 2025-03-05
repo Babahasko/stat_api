@@ -1,10 +1,12 @@
 package link
 
 import (
-	"fmt"
 	"go/adv-demo/pkg/req"
 	"go/adv-demo/pkg/res"
 	"net/http"
+	"strconv"
+
+	"gorm.io/gorm"
 )
 
 
@@ -24,6 +26,7 @@ func NewLinkHandler(router *http.ServeMux, deps LinkHandlerDeps) {
 	router.HandleFunc("PATCH /link/{id}", handler.Update())
 	router.HandleFunc("DELETE /link/{id}", handler.Delete())
 	router.HandleFunc("GET /{hash}", handler.GoTo())
+	router.HandleFunc("GET /link", handler.GetAll())
 }
 
 func (handler *LinkHandler) Create() http.HandlerFunc {
@@ -63,12 +66,58 @@ func (handler *LinkHandler) GoTo() http.HandlerFunc {
 }
 func (handler *LinkHandler) Update() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		body, err := req.HandleBody[LinkUpdateRequest](&w, r)
+		if err != nil {
+			return
+		}
+		idString := r.PathValue("id")
+		id, err := strconv.ParseUint(idString, 10, 32)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		link, err := handler.LinkRepository.Update(&Link{
+			Model: gorm.Model{ID: uint(id)},
+			Url: body.Url,
+			Hash: body.Hash,
+		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		res.Json(w, link, 201)
+
 	}
 }
 
 func (handler *LinkHandler) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		id := r.PathValue("id")
-		fmt.Println(id)		
+		idString := r.PathValue("id")
+		id, err := strconv.ParseUint(idString, 10, 32)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		_, err = handler.LinkRepository.GetById(uint(id))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			return
+		}
+		err = handler.LinkRepository.Delete(uint(id))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		res.Json(w, nil, 200)
+	}
+}
+
+func (handler *LinkHandler) GetAll() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		links, err := handler.LinkRepository.GetAll()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		res.Json(w, links, 200)
 	}
 }
