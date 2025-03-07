@@ -9,7 +9,7 @@ type User struct {
 	Password string `json:"password"`
 }
 
-func NewUser(email string,name string, password string) *User{
+func NewUser(email, name, password string) *User{
 	user := &User{
 		Email: email,
 		Name: name,
