@@ -20,7 +20,7 @@ type AuthConfig struct{
 }
 
 func LoadConfig() *Config {
-	err := godotenv.Load(".env")
+	err := godotenv.Load(`D:\Programming\2_Learn\Go\adv-demo\.env`)
 	if err != nil {
 		log.Println("Erro loading .env file, using default config")
 	}
