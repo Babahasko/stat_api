@@ -10,10 +10,12 @@ import (
 
 type AuthHandlerDeps struct {
 	*configs.Config
+	*AuthService
 }
 
 type AuthHandler struct {
 	*configs.Config
+	*AuthService
 }
 
 func NewAuthHandler(router *http.ServeMux, deps AuthHandlerDeps) {
