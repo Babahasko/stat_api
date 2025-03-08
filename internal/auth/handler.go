@@ -33,9 +33,10 @@ func (handler *AuthHandler) Login() http.HandlerFunc {
 		if err != nil {
 			return
 		}
-		fmt.Println(payload)
+		result, err := handler.AuthService.Login(payload.Email, payload.Password)
+		fmt.Println(result, err)
 		resp_body := LoginResponse{
-			Token: "123",
+			Token: result,
 		}
 		res.Json(w, resp_body, 200)
 	}
