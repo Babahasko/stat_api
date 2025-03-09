@@ -1,6 +1,7 @@
 package link
 
 import (
+	"go/adv-demo/configs"
 	"go/adv-demo/pkg/middleware"
 	"go/adv-demo/pkg/req"
 	"go/adv-demo/pkg/res"
@@ -10,9 +11,9 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type LinkHandlerDeps struct {
 	LinkRepository *LinkRepository
+	Config         *configs.Config
 }
 
 type LinkHandler struct {
@@ -24,7 +25,7 @@ func NewLinkHandler(router *http.ServeMux, deps LinkHandlerDeps) {
 		LinkRepository: deps.LinkRepository,
 	}
 	router.HandleFunc("POST /link", handler.Create())
-	router.Handle("PATCH /link/{id}", middleware.IsAuthed(handler.Update()))
+	router.Handle("PATCH /link/{id}", middleware.IsAuthed(handler.Update(), deps.Config))
 	router.HandleFunc("DELETE /link/{id}", handler.Delete())
 	router.HandleFunc("GET /{hash}", handler.GoTo())
 	router.HandleFunc("GET /link", handler.GetAll())
@@ -44,7 +45,7 @@ func (handler *LinkHandler) Create() http.HandlerFunc {
 			}
 			link.GenerateHash()
 		}
-		
+
 		createdLink, err := handler.LinkRepository.Create(link)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
@@ -79,8 +80,8 @@ func (handler *LinkHandler) Update() http.HandlerFunc {
 		}
 		link, err := handler.LinkRepository.Update(&Link{
 			Model: gorm.Model{ID: uint(id)},
-			Url: body.Url,
-			Hash: body.Hash,
+			Url:   body.Url,
+			Hash:  body.Hash,
 		})
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)

@@ -32,12 +32,12 @@ func main() {
 	})
 	link.NewLinkHandler(router, link.LinkHandlerDeps{
 		LinkRepository: linkRepository,
+		Config: conf,
 	})
 
 	// Middlewares
 	stack := middleware.Chain(
 		middleware.CORS,
-		middleware.IsAuthed,
 		middleware.Logging,
 	)
 
