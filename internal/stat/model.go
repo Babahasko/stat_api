@@ -8,6 +8,6 @@ import (
 type Stat struct {
 	gorm.Model
 	LinkId uint           `json:"link_id"`
-	Clics  int            `json:"clicks"`
+	Clicks  int            `json:"clicks"`
 	Date   datatypes.Date `json:"date"`
 }

@@ -17,7 +17,6 @@ func main() {
 		panic(err)
 	}
 	db, err := gorm.Open(postgres.Open(os.Getenv("DSN")),  &gorm.Config{
-		
 	})
 	if err != nil {
 		panic(err)
