@@ -5,6 +5,7 @@ import (
 	"go/adv-demo/configs"
 	"go/adv-demo/internal/auth"
 	"go/adv-demo/internal/link"
+	"go/adv-demo/internal/stat"
 	"go/adv-demo/internal/user"
 	"go/adv-demo/pkg/db"
 	"go/adv-demo/pkg/middleware"
@@ -20,6 +21,7 @@ func main() {
 	linkRepository := link.NewLinkRepository(db)
 
 	userReposiory := user.NewUserRepository(db)
+	statRepository := stat.NewStatRepository(db)
 
 	//Services
 
@@ -32,7 +34,8 @@ func main() {
 	})
 	link.NewLinkHandler(router, link.LinkHandlerDeps{
 		LinkRepository: linkRepository,
-		Config: conf,
+		StatRepository: statRepository,
+		Config:         conf,
 	})
 
 	// Middlewares

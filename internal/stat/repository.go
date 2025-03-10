@@ -30,7 +30,7 @@ func (repo *StatRepository) AddClick(linkId uint) {
 			Date:   currentDate,
 		})
 	} else {
-		stat.Clicks ++
+		stat.Clicks += 1
 		repo.Database.Save(&stat)
 	}
 

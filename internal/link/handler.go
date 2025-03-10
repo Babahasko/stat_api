@@ -3,6 +3,7 @@ package link
 import (
 	"fmt"
 	"go/adv-demo/configs"
+	"go/adv-demo/pkg/di"
 	"go/adv-demo/pkg/middleware"
 	"go/adv-demo/pkg/req"
 	"go/adv-demo/pkg/res"
@@ -14,16 +15,19 @@ import (
 
 type LinkHandlerDeps struct {
 	LinkRepository *LinkRepository
+	StatRepository di.IStatRepository
 	Config         *configs.Config
 }
 
 type LinkHandler struct {
 	LinkRepository *LinkRepository
+	StatRepository di.IStatRepository
 }
 
 func NewLinkHandler(router *http.ServeMux, deps LinkHandlerDeps) {
 	handler := &LinkHandler{
 		LinkRepository: deps.LinkRepository,
+		StatRepository: deps.StatRepository,
 	}
 	router.HandleFunc("POST /link", handler.Create())
 	router.Handle("PATCH /link/{id}", middleware.IsAuthed(handler.Update(), deps.Config))
@@ -64,6 +68,8 @@ func (handler *LinkHandler) GoTo() http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			return
 		}
+		fmt.Println(link.ID)
+		handler.StatRepository.AddClick(link.ID)
 		http.Redirect(w, r, link.Url, http.StatusTemporaryRedirect)
 	}
 }
