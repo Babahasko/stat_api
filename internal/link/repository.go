@@ -16,7 +16,7 @@ func NewLinkRepository(database *db.Db) *LinkRepository {
 	}
 }
 
-func (repo *LinkRepository) Create(link *Link) (*Link, error){
+func (repo *LinkRepository) Create(link *Link) (*Link, error) {
 	result := repo.Database.DB.Create(link)
 	if result.Error != nil {
 		return nil, result.Error
@@ -25,21 +25,12 @@ func (repo *LinkRepository) Create(link *Link) (*Link, error){
 }
 
 func (repo *LinkRepository) GetByHash(hash string) (*Link, error) {
-	var link Link 
+	var link Link
 	result := repo.Database.DB.First(&link, "hash = ?", hash)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return &link, nil
-}
-
-func (repo *LinkRepository) GetAll() (*[]Link, error){
-	var links []Link
-	result := repo.Database.DB.Find(&links)
-	if result.Error != nil {
-		return nil, result.Error
-	}
-	return &links, nil
 }
 
 func (repo *LinkRepository) GetById(id uint) (*Link, error) {
@@ -65,4 +56,25 @@ func (repo *LinkRepository) Delete(id uint) error {
 		return result.Error
 	}
 	return nil
+}
+
+func (repo *LinkRepository) Count() int64 {
+	var count int64
+	repo.Database.
+		Table("links").
+		Where("deleted_at is null").
+		Count(&count)
+	return count
+}
+
+func (repo *LinkRepository) GetAll(limit, offset int) []Link {
+	var links []Link
+	repo.Database.
+		Table("links").
+		Where("deleted_at is null").
+		Order("id asc").
+		Limit(limit).
+		Offset(offset).
+		Scan(&links)
+	return links
 }
