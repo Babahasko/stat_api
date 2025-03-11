@@ -8,6 +8,7 @@ import (
 	"go/adv-demo/internal/stat"
 	"go/adv-demo/internal/user"
 	"go/adv-demo/pkg/db"
+	"go/adv-demo/pkg/event"
 	"go/adv-demo/pkg/middleware"
 	"net/http"
 )
@@ -16,6 +17,7 @@ func main() {
 	conf := configs.LoadConfig()
 	db := db.NewDB(conf)
 	router := http.NewServeMux()
+	eventBus := event.NewEventBus()
 
 	//Repositories
 	linkRepository := link.NewLinkRepository(db)
@@ -26,6 +28,11 @@ func main() {
 	//Services
 
 	authService := auth.NewAuthService(userReposiory)
+	statService := stat.NewStatService(&stat.StatServiceDeps{
+		EventBus:       eventBus,
+		StatRepository: statRepository,
+	})
+	go statService.AddClick()
 
 	// Handler
 	auth.NewAuthHandler(router, auth.AuthHandlerDeps{
@@ -34,8 +41,8 @@ func main() {
 	})
 	link.NewLinkHandler(router, link.LinkHandlerDeps{
 		LinkRepository: linkRepository,
-		StatRepository: statRepository,
 		Config:         conf,
+		EventBus:       eventBus,
 	})
 
 	// Middlewares
