@@ -32,6 +32,7 @@ func main() {
 		EventBus:       eventBus,
 		StatRepository: statRepository,
 	})
+
 	go statService.AddClick()
 
 	// Handler
@@ -43,6 +44,9 @@ func main() {
 		LinkRepository: linkRepository,
 		Config:         conf,
 		EventBus:       eventBus,
+	})
+	stat.NewStatHandler(router, &stat.StatHandlerDeps{
+		StatRepository: statRepository,
 	})
 
 	// Middlewares
