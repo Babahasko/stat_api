@@ -12,8 +12,7 @@ import (
 	"go/adv-demo/pkg/middleware"
 	"net/http"
 )
-
-func main() {
+func App() http.Handler{
 	conf := configs.LoadConfig()
 	db := db.NewDB(conf)
 	router := http.NewServeMux()
@@ -48,16 +47,19 @@ func main() {
 	stat.NewStatHandler(router, &stat.StatHandlerDeps{
 		StatRepository: statRepository,
 	})
-
 	// Middlewares
 	stack := middleware.Chain(
 		middleware.CORS,
 		middleware.Logging,
 	)
+	return stack(router)
+}
 
+func main() {
+	app := App()
 	server := http.Server{
 		Addr:    ":8081",
-		Handler: stack(router),
+		Handler: app,
 	}
 
 	fmt.Println("Server is listening on port 8081")
