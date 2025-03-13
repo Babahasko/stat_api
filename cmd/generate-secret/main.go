@@ -10,7 +10,6 @@ import (
 func main() {
 	// Note that no error handling is necessary, as Read always succeeds.
 	secret := make([]byte, 32)
-	fmt.Println(secret)
 	_, err := rand.Read(secret)
 	if err != nil {
 		log.Fatal("Error generating secret:", err)
