@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres_adv_go
+    container_name: postgres_stat_api
     image: postgres:latest
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
