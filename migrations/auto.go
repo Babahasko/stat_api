@@ -4,6 +4,7 @@ import (
 	"go/adv-demo/internal/link"
 	"go/adv-demo/internal/stat"
 	"go/adv-demo/internal/user"
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -12,7 +13,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load(`D:\Programming\2_Learn\Go\adv-demo\.env`)
 	if err != nil {
 		panic(err)
 	}
@@ -21,5 +22,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&link.Link{}, &user.User{}, &stat.Stat{})
+	err = db.AutoMigrate(&link.Link{}, &user.User{}, &stat.Stat{})
+	if err != nil {
+        log.Printf("Ошибка при выполнении миграций: %v", err)
+		return
+    }
+	log.Println("Миграции успешно выполнены")
 }
