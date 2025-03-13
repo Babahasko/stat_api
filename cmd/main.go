@@ -58,11 +58,11 @@ func App() http.Handler{
 func main() {
 	app := App()
 	server := http.Server{
-		Addr:    ":8082",
+		Addr:    ":8081",
 		Handler: app,
 	}
 
-	fmt.Println("Server is listening on port 8082")
+	fmt.Println("Server is listening on port 8081")
 	err := server.ListenAndServe()
 	if err != nil {
 		fmt.Printf("Server failed to start: %v\n", err)
