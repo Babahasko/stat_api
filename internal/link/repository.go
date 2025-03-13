@@ -1,7 +1,7 @@
 package link
 
 import (
-	"go/adv-demo/pkg/db"
+	"github.com/Babahasko/stat_api/pkg/db"
 
 	"gorm.io/gorm/clause"
 )

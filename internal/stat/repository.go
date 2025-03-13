@@ -1,7 +1,7 @@
 package stat
 
 import (
-	"go/adv-demo/pkg/db"
+	"github.com/Babahasko/stat_api/pkg/db"
 	"time"
 
 	"gorm.io/datatypes"

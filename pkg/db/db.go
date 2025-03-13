@@ -1,7 +1,7 @@
 package db
 
 import (
-	"go/adv-demo/configs"
+	"github.com/Babahasko/stat_api/configs"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

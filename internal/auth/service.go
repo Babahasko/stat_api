@@ -2,8 +2,8 @@ package auth
 
 import (
 	"errors"
-	"go/adv-demo/internal/user"
-	"go/adv-demo/pkg/di"
+	"github.com/Babahasko/stat_api/internal/user"
+	"github.com/Babahasko/stat_api/pkg/di"
 
 	"golang.org/x/crypto/bcrypt"
 )

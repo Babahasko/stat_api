@@ -1,6 +1,6 @@
 package user
 
-import "go/adv-demo/pkg/db"
+import "github.com/Babahasko/stat_api/pkg/db"
 
 type UserRepository struct {
 	Database *db.Db

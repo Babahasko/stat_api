@@ -2,11 +2,11 @@ package link
 
 import (
 	"fmt"
-	"go/adv-demo/configs"
-	"go/adv-demo/pkg/event"
-	"go/adv-demo/pkg/middleware"
-	"go/adv-demo/pkg/req"
-	"go/adv-demo/pkg/res"
+	"github.com/Babahasko/stat_api/configs"
+	"github.com/Babahasko/stat_api/pkg/event"
+	"github.com/Babahasko/stat_api/pkg/middleware"
+	"github.com/Babahasko/stat_api/pkg/req"
+	"github.com/Babahasko/stat_api/pkg/res"
 	"net/http"
 	"strconv"
 

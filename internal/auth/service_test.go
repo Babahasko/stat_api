@@ -1,8 +1,8 @@
 package auth_test
 
 import (
-	"go/adv-demo/internal/auth"
-	"go/adv-demo/internal/user"
+	"github.com/Babahasko/stat_api/internal/auth"
+	"github.com/Babahasko/stat_api/internal/user"
 	"testing"
 )
 

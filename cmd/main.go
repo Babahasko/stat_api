@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"go/adv-demo/configs"
-	"go/adv-demo/internal/auth"
-	"go/adv-demo/internal/link"
-	"go/adv-demo/internal/stat"
-	"go/adv-demo/internal/user"
-	"go/adv-demo/pkg/db"
-	"go/adv-demo/pkg/event"
-	"go/adv-demo/pkg/middleware"
+	"github.com/Babahasko/stat_api/configs"
+	"github.com/Babahasko/stat_api/internal/auth"
+	"github.com/Babahasko/stat_api/internal/link"
+	"github.com/Babahasko/stat_api/internal/stat"
+	"github.com/Babahasko/stat_api/internal/user"
+	"github.com/Babahasko/stat_api/pkg/db"
+	"github.com/Babahasko/stat_api/pkg/event"
+	"github.com/Babahasko/stat_api/pkg/middleware"
 	"net/http"
 )
 func App() http.Handler{
@@ -58,11 +58,11 @@ func App() http.Handler{
 func main() {
 	app := App()
 	server := http.Server{
-		Addr:    ":8081",
+		Addr:    ":8082",
 		Handler: app,
 	}
 
-	fmt.Println("Server is listening on port 8081")
+	fmt.Println("Server is listening on port 8082")
 	err := server.ListenAndServe()
 	if err != nil {
 		fmt.Printf("Server failed to start: %v\n", err)

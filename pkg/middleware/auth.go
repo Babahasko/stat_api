@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"context"
-	"go/adv-demo/configs"
-	"go/adv-demo/pkg/jwt"
+	"github.com/Babahasko/stat_api/configs"
+	"github.com/Babahasko/stat_api/pkg/jwt"
 	"net/http"
 	"strings"
 )

@@ -3,8 +3,8 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"go/adv-demo/internal/auth"
-	"go/adv-demo/internal/user"
+	"github.com/Babahasko/stat_api/internal/auth"
+	"github.com/Babahasko/stat_api/internal/user"
 	"io"
 	"net/http"
 	"net/http/httptest"

@@ -1,10 +1,10 @@
 package auth
 
 import (
-	"go/adv-demo/configs"
-	"go/adv-demo/pkg/jwt"
-	"go/adv-demo/pkg/req"
-	"go/adv-demo/pkg/res"
+	"github.com/Babahasko/stat_api/configs"
+	"github.com/Babahasko/stat_api/pkg/jwt"
+	"github.com/Babahasko/stat_api/pkg/req"
+	"github.com/Babahasko/stat_api/pkg/res"
 	"net/http"
 )
 

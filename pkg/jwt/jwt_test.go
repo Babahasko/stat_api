@@ -1,7 +1,7 @@
 package jwt_test
 
 import (
-	"go/adv-demo/pkg/jwt"
+	"github.com/Babahasko/stat_api/pkg/jwt"
 	"testing"
 )
 

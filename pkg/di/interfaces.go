@@ -1,7 +1,7 @@
 package di
 
 import (
-	"go/adv-demo/internal/user"
+	"github.com/Babahasko/stat_api/internal/user"
 )
 type IStatRepository interface {
 	AddClick(LinkId uint)

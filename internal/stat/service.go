@@ -1,7 +1,7 @@
 package stat
 
 import (
-	"go/adv-demo/pkg/event"
+	"github.com/Babahasko/stat_api/pkg/event"
 	"log"
 )
 

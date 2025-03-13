@@ -1,7 +1,7 @@
 package link
 
 import (
-	"go/adv-demo/internal/stat"
+	"github.com/Babahasko/stat_api/internal/stat"
 	"math/rand"
 
 	"gorm.io/gorm"

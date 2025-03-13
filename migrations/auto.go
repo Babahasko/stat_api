@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go/adv-demo/internal/link"
-	"go/adv-demo/internal/stat"
-	"go/adv-demo/internal/user"
+	"github.com/Babahasko/stat_api/internal/link"
+	"github.com/Babahasko/stat_api/internal/stat"
+	"github.com/Babahasko/stat_api/internal/user"
 	"log"
 	"os"
 

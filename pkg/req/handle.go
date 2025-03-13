@@ -1,7 +1,7 @@
 package req
 
 import (
-	"go/adv-demo/pkg/res"
+	"github.com/Babahasko/stat_api/pkg/res"
 	"net/http"
 )
 
